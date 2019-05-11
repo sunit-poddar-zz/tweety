@@ -66,6 +66,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+PROJECT_APPS = [
+    'tweety_utils',
+    'users'
+]
+
+INSTALLED_APPS += PROJECT_APPS
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -112,6 +119,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'users.user'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
