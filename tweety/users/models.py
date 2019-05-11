@@ -11,17 +11,12 @@ from tweety_utils.model_utils import RowInformation
 from users.managers import UserManager
 
 
-class User(AbstractUser):
+class User(RowInformation, AbstractUser):
     first_name = models.CharField(max_length=140, null=False, blank=False)
     last_name = models.CharField(max_length=140, null=False, blank=False)
     username = models.CharField(max_length=140, null=False, blank=False, unique=True, validators=[UnicodeUsernameValidator])
     email = models.CharField(max_length=140, null=False, blank=False, unique=True)
     profile_pic = models.URLField(null=True, blank=True)
-    # is_staff = models.BooleanField(
-    #     _('staff status'),
-    #     default=False,
-    #     help_text=_('Designates whether the user can log into this admin site.'),
-    # )
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
