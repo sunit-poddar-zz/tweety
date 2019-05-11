@@ -1,6 +1,6 @@
 # django imports
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils.translation import gettext_lazy as _
 
@@ -11,17 +11,17 @@ from tweety_utils.model_utils import RowInformation
 from users.managers import UserManager
 
 
-class User(RowInformation, AbstractBaseUser, PermissionsMixin):
+class User(AbstractUser):
     first_name = models.CharField(max_length=140, null=False, blank=False)
     last_name = models.CharField(max_length=140, null=False, blank=False)
     username = models.CharField(max_length=140, null=False, blank=False, unique=True, validators=[UnicodeUsernameValidator])
     email = models.CharField(max_length=140, null=False, blank=False, unique=True)
     profile_pic = models.URLField(null=True, blank=True)
-    is_staff = models.BooleanField(
-        _('staff status'),
-        default=False,
-        help_text=_('Designates whether the user can log into this admin site.'),
-    )
+    # is_staff = models.BooleanField(
+    #     _('staff status'),
+    #     default=False,
+    #     help_text=_('Designates whether the user can log into this admin site.'),
+    # )
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
@@ -29,6 +29,9 @@ class User(RowInformation, AbstractBaseUser, PermissionsMixin):
 
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return "{0} {1}".format(self.first_name, self.last_name)
 
 
 class Follows(RowInformation):
@@ -45,3 +48,6 @@ class Tweet(RowInformation):
 
     def save(self, *args, **kwargs):
         super(Tweet, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return "{0} - {1}".format(self.user, self.text)

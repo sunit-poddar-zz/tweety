@@ -9,7 +9,16 @@ class UserManager(BaseUserManager):
     def create_user(self, first_name, last_name, username, email, password=None):
 
         if username is None:
-            raise TypeError('Users must have an email address.')
+            raise TypeError('Users must have a username.')
+
+        if first_name is None:
+            raise TypeError('Users must have a first name.')
+
+        if last_name is None:
+            raise TypeError('Users must have a last name.')
+
+        if email is None:
+            raise TypeError('Users must have a email address.')
 
         user = self.model(
             first_name=first_name,
