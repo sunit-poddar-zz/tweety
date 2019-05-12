@@ -51,7 +51,10 @@ class TweetViewset(ModelViewSet):
 
 def user_profile_timeline(request, id):
     if request.user.is_authenticated:
-        return User.objects.get(id=id).tweet.all().order_by('-created_at')
+        user_tweets = User.objects.get(id=id).tweet.all().order_by('-created_at')
+        serialized_tweets = TweetSerializer(user_tweets, many=True)
+
+        return HttpResponse(JSONRenderer().render(serialized_tweets.data))
     else:
         raise PermissionDenied("Authentication not provided")
 
@@ -59,6 +62,7 @@ def user_profile_timeline(request, id):
 def user_home_timeline(request, id):
     if request.user.is_authenticated:
         if request.user.id == id:
+            # preventing other logged in users from viewing someone else's home
             tweet_ids = list(User.objects.get(id=id).following.values_list('tweet', flat=True))
             tweets = Tweet.objects.filter(id__in=tweet_ids).order_by('-created_at')
             serialized_tweets = TweetSerializer(tweets, many=True)
