@@ -31,4 +31,37 @@ def group_activity():
     [print("{0} - {1} messages".format(member[0], member[1])) for member in most_active_members]
 
 
+def test_get_name_from_line():
+    print('\n\nTESTING NAME FROM LINE\n\n')
+    if get_name_from_line('<John>: Okay, sounds like everyone is on the same page here') == 'John':
+        print('pass')
+    else:
+        print('fail')
+
+    if get_name_from_line('<Ram>: Great, lets get started') == 'Ram':
+        print('pass')
+    else:
+        print('fail')
+
+    if get_name_from_line('<Adam>: yea, and the backend building for chatbots is super exicting') == 'Adam':
+        print('pass')
+    else:
+        print('fail')
+
+    if get_name_from_line('<Ryan>: Haptik is cool ðŸ˜„') == 'Ryan':
+        print('pass')
+    else:
+        print('fail')
+
+    if get_name_from_line('<Bush>: Great meeting <all>') == 'Bush':
+        print('pass')
+    else:
+        print('fail')
+
+
+def test():
+    test_get_name_from_line()
+
+
 group_activity()
+test()

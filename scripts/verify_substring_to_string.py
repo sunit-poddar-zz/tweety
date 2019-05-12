@@ -34,4 +34,33 @@ def initiate():
     print(can_create(list_of_strings, input_string))
 
 
+def test():
+    print('\n\nTEST CASES')
+    if can_create(["back", "end", "front", "tree"], 'backend') == True:
+        print('pass')
+    else:
+        print('fail')
+
+    if can_create(["back", "end", "front", "tree"], 'endfront') == True:
+        print('pass')
+    else:
+        print('fail')
+
+    if can_create(["back", "end", "front", "tree"], 'frontyard') == False:
+        print('pass')
+    else:
+        print('fail')
+
+    if can_create(["back", "end", "front", "tree"], 'backfront') == True:
+        print('pass')
+    else:
+        print('fail')
+
+    if can_create(["back", "end", "front", "tree"], 'notree') == False:
+        print('pass')
+    else:
+        print('fail')
+
+
 initiate()
+test()
