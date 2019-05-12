@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import datetime
 
 # django imports
 from django.core.exceptions import ImproperlyConfigured
@@ -64,6 +65,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # third party apps
+    'rest_framework',
+
 ]
 
 PROJECT_APPS = [
@@ -117,6 +122,24 @@ DATABASES = {
         'HOST': get_env_variable('DATABASE_HOST'),
         'PORT': get_env_variable('DATABASE_PORT'),  # Set to empty string for default.
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+# JWT auth and response payload
+JWT_AUTH = {
+    'JWT_PAYLOAD_HANDLER': 'users.utils.helpers.generate_jwt_payload',
+    'JWT_SECRET_KEY': 'auth.module@ithaka',
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=30),
 }
 
 AUTH_USER_MODEL = 'users.user'

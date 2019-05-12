@@ -1,8 +1,10 @@
 # django imports
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, AbstractUser
+from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
-from django.utils.translation import gettext_lazy as _
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.db import transaction
 
 # project imports
 from tweety_utils.model_utils import RowInformation
@@ -17,6 +19,7 @@ class User(RowInformation, AbstractUser):
     username = models.CharField(max_length=140, null=False, blank=False, unique=True, validators=[UnicodeUsernameValidator])
     email = models.CharField(max_length=140, null=False, blank=False, unique=True)
     profile_pic = models.URLField(null=True, blank=True)
+    following = models.ManyToManyField(to='User', related_name='followed_by')
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
@@ -27,14 +30,6 @@ class User(RowInformation, AbstractUser):
 
     def __str__(self):
         return "{0} {1}".format(self.first_name, self.last_name)
-
-
-class Follows(RowInformation):
-    user = models.ForeignKey(to=User, on_delete=models.PROTECT, related_name='follows')
-    followers = models.ManyToManyField(to=User, related_name='followers')
-
-    def save(self, *args, **kwargs):
-        super(Follows, self).save(*args, **kwargs)
 
 
 class Tweet(RowInformation):
