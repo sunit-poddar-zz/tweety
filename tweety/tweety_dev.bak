@@ -1,0 +1,1310 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.12
+-- Dumped by pg_dump version 9.6.12
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO tweety_dev_app;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO tweety_dev_app;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO tweety_dev_app;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO tweety_dev_app;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO tweety_dev_app;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO tweety_dev_app;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO tweety_dev_app;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO tweety_dev_app;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO tweety_dev_app;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO tweety_dev_app;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO tweety_dev_app;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO tweety_dev_app;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO tweety_dev_app;
+
+--
+-- Name: jet_bookmark; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.jet_bookmark (
+    id integer NOT NULL,
+    url character varying(200) NOT NULL,
+    title character varying(255) NOT NULL,
+    "user" integer NOT NULL,
+    date_add timestamp with time zone NOT NULL,
+    CONSTRAINT jet_bookmark_user_check CHECK (("user" >= 0))
+);
+
+
+ALTER TABLE public.jet_bookmark OWNER TO tweety_dev_app;
+
+--
+-- Name: jet_bookmark_id_seq; Type: SEQUENCE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE SEQUENCE public.jet_bookmark_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.jet_bookmark_id_seq OWNER TO tweety_dev_app;
+
+--
+-- Name: jet_bookmark_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER SEQUENCE public.jet_bookmark_id_seq OWNED BY public.jet_bookmark.id;
+
+
+--
+-- Name: jet_pinnedapplication; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.jet_pinnedapplication (
+    id integer NOT NULL,
+    app_label character varying(255) NOT NULL,
+    "user" integer NOT NULL,
+    date_add timestamp with time zone NOT NULL,
+    CONSTRAINT jet_pinnedapplication_user_check CHECK (("user" >= 0))
+);
+
+
+ALTER TABLE public.jet_pinnedapplication OWNER TO tweety_dev_app;
+
+--
+-- Name: jet_pinnedapplication_id_seq; Type: SEQUENCE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE SEQUENCE public.jet_pinnedapplication_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.jet_pinnedapplication_id_seq OWNER TO tweety_dev_app;
+
+--
+-- Name: jet_pinnedapplication_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER SEQUENCE public.jet_pinnedapplication_id_seq OWNED BY public.jet_pinnedapplication.id;
+
+
+--
+-- Name: users_tweet; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.users_tweet (
+    id integer NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    modified_at timestamp with time zone NOT NULL,
+    text character varying(140) NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users_tweet OWNER TO tweety_dev_app;
+
+--
+-- Name: users_tweet_id_seq; Type: SEQUENCE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE SEQUENCE public.users_tweet_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_tweet_id_seq OWNER TO tweety_dev_app;
+
+--
+-- Name: users_tweet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER SEQUENCE public.users_tweet_id_seq OWNED BY public.users_tweet.id;
+
+
+--
+-- Name: users_user; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.users_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    created_at timestamp with time zone NOT NULL,
+    modified_at timestamp with time zone NOT NULL,
+    is_active boolean NOT NULL,
+    first_name character varying(140) NOT NULL,
+    last_name character varying(140) NOT NULL,
+    username character varying(140) NOT NULL,
+    email character varying(140) NOT NULL,
+    profile_pic character varying(200),
+    date_joined timestamp with time zone NOT NULL,
+    is_staff boolean NOT NULL,
+    is_superuser boolean NOT NULL
+);
+
+
+ALTER TABLE public.users_user OWNER TO tweety_dev_app;
+
+--
+-- Name: users_user_following; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.users_user_following (
+    id integer NOT NULL,
+    from_user_id integer NOT NULL,
+    to_user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users_user_following OWNER TO tweety_dev_app;
+
+--
+-- Name: users_user_following_id_seq; Type: SEQUENCE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE SEQUENCE public.users_user_following_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_following_id_seq OWNER TO tweety_dev_app;
+
+--
+-- Name: users_user_following_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER SEQUENCE public.users_user_following_id_seq OWNED BY public.users_user_following.id;
+
+
+--
+-- Name: users_user_groups; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.users_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users_user_groups OWNER TO tweety_dev_app;
+
+--
+-- Name: users_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE SEQUENCE public.users_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_groups_id_seq OWNER TO tweety_dev_app;
+
+--
+-- Name: users_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER SEQUENCE public.users_user_groups_id_seq OWNED BY public.users_user_groups.id;
+
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE SEQUENCE public.users_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_id_seq OWNER TO tweety_dev_app;
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users_user.id;
+
+
+--
+-- Name: users_user_user_permissions; Type: TABLE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE TABLE public.users_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users_user_user_permissions OWNER TO tweety_dev_app;
+
+--
+-- Name: users_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE SEQUENCE public.users_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_user_permissions_id_seq OWNER TO tweety_dev_app;
+
+--
+-- Name: users_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER SEQUENCE public.users_user_user_permissions_id_seq OWNED BY public.users_user_user_permissions.id;
+
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: jet_bookmark id; Type: DEFAULT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.jet_bookmark ALTER COLUMN id SET DEFAULT nextval('public.jet_bookmark_id_seq'::regclass);
+
+
+--
+-- Name: jet_pinnedapplication id; Type: DEFAULT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.jet_pinnedapplication ALTER COLUMN id SET DEFAULT nextval('public.jet_pinnedapplication_id_seq'::regclass);
+
+
+--
+-- Name: users_tweet id; Type: DEFAULT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_tweet ALTER COLUMN id SET DEFAULT nextval('public.users_tweet_id_seq'::regclass);
+
+
+--
+-- Name: users_user id; Type: DEFAULT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user ALTER COLUMN id SET DEFAULT nextval('public.users_user_id_seq'::regclass);
+
+
+--
+-- Name: users_user_following id; Type: DEFAULT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_following ALTER COLUMN id SET DEFAULT nextval('public.users_user_following_id_seq'::regclass);
+
+
+--
+-- Name: users_user_groups id; Type: DEFAULT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_groups ALTER COLUMN id SET DEFAULT nextval('public.users_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: users_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.users_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweety_dev_app
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweety_dev_app
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add pinned application	2	add_pinnedapplication
+2	Can change pinned application	2	change_pinnedapplication
+3	Can delete pinned application	2	delete_pinnedapplication
+4	Can view pinned application	2	view_pinnedapplication
+5	Can add bookmark	1	add_bookmark
+6	Can change bookmark	1	change_bookmark
+7	Can delete bookmark	1	delete_bookmark
+8	Can view bookmark	1	view_bookmark
+9	Can add log entry	3	add_logentry
+10	Can change log entry	3	change_logentry
+11	Can delete log entry	3	delete_logentry
+12	Can view log entry	3	view_logentry
+13	Can add permission	5	add_permission
+14	Can change permission	5	change_permission
+15	Can delete permission	5	delete_permission
+16	Can view permission	5	view_permission
+17	Can add group	4	add_group
+18	Can change group	4	change_group
+19	Can delete group	4	delete_group
+20	Can view group	4	view_group
+21	Can add content type	6	add_contenttype
+22	Can change content type	6	change_contenttype
+23	Can delete content type	6	delete_contenttype
+24	Can view content type	6	view_contenttype
+25	Can add session	7	add_session
+26	Can change session	7	change_session
+27	Can delete session	7	delete_session
+28	Can view session	7	view_session
+29	Can add tweet	9	add_tweet
+30	Can change tweet	9	change_tweet
+31	Can delete tweet	9	delete_tweet
+32	Can view tweet	9	view_tweet
+33	Can add follows	10	add_follows
+34	Can change follows	10	change_follows
+35	Can delete follows	10	delete_follows
+36	Can view follows	10	view_follows
+37	Can add user	8	add_user
+38	Can change user	8	change_user
+39	Can delete user	8	delete_user
+40	Can view user	8	view_user
+\.
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweety_dev_app
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 40, true);
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2019-05-12 04:33:30.967042+00	2	 	1	[{"added": {}}]	8	1
+2	2019-05-12 06:36:21.606121+00	4	Nimbark	1	[{"added": {}}]	10	1
+3	2019-05-12 06:36:34.344552+00	5	Ravi	1	[{"added": {}}]	10	1
+4	2019-05-12 06:36:41.6301+00	6	Swati	1	[{"added": {}}]	10	1
+5	2019-05-12 07:16:20.200345+00	1	Sunit Poddar	2	[{"changed": {"fields": ["following"]}}]	8	1
+6	2019-05-12 07:17:12.59623+00	5	Swati Nagre	2	[{"changed": {"fields": ["password", "following"]}}]	8	1
+7	2019-05-12 07:54:31.105731+00	5	Swati Nagre	2	[{"changed": {"fields": ["following"]}}]	8	1
+8	2019-05-12 07:54:47.534067+00	3	Astha Nagre - My first tweet	1	[{"added": {}}]	9	1
+\.
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweety_dev_app
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 8, true);
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	jet	bookmark
+2	jet	pinnedapplication
+3	admin	logentry
+4	auth	group
+5	auth	permission
+6	contenttypes	contenttype
+7	sessions	session
+8	users	user
+9	users	tweet
+10	users	follows
+\.
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweety_dev_app
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 10, true);
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	users	0001_initial	2019-05-11 21:41:25.124272+00
+2	contenttypes	0001_initial	2019-05-11 21:41:25.49549+00
+3	admin	0001_initial	2019-05-11 21:41:25.642131+00
+4	admin	0002_logentry_remove_auto_add	2019-05-11 21:41:25.771025+00
+5	admin	0003_logentry_add_action_flag_choices	2019-05-11 21:41:25.787327+00
+6	contenttypes	0002_remove_content_type_name	2019-05-11 21:41:25.81281+00
+7	auth	0001_initial	2019-05-11 21:41:26.038318+00
+8	auth	0002_alter_permission_name_max_length	2019-05-11 21:41:26.665053+00
+9	auth	0003_alter_user_email_max_length	2019-05-11 21:41:26.681806+00
+10	auth	0004_alter_user_username_opts	2019-05-11 21:41:26.698538+00
+11	auth	0005_alter_user_last_login_null	2019-05-11 21:41:26.717088+00
+12	auth	0006_require_contenttypes_0002	2019-05-11 21:41:26.738298+00
+13	auth	0007_alter_validators_add_error_messages	2019-05-11 21:41:26.760013+00
+14	auth	0008_alter_user_username_max_length	2019-05-11 21:41:26.776665+00
+15	auth	0009_alter_user_last_name_max_length	2019-05-11 21:41:26.793488+00
+16	auth	0010_alter_group_name_max_length	2019-05-11 21:41:26.810053+00
+17	auth	0011_update_proxy_permissions	2019-05-11 21:41:26.83288+00
+18	jet	0001_initial	2019-05-11 21:41:27.072505+00
+19	jet	0002_delete_userdashboardmodule	2019-05-11 21:41:27.092487+00
+20	sessions	0001_initial	2019-05-11 21:41:27.236493+00
+21	users	0002_auto_20190511_2141	2019-05-11 21:41:28.464261+00
+22	users	0003_auto_20190512_0624	2019-05-12 06:24:37.222425+00
+23	users	0004_auto_20190512_0634	2019-05-12 06:34:27.29781+00
+24	users	0005_auto_20190512_0714	2019-05-12 07:14:03.718993+00
+\.
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweety_dev_app
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 24, true);
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+fi9am58evxt9m8v5538ynofzruhkk80t	YzNiNzJhNGVmMGFkYzY5NGE3MGYwYjc1MGQ1MGJjM2JjNmNmYjA5Yjp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjEiLCJfYXV0aF91c2VyX2hhc2giOiJlMzdmYjc1MzJiODAzNmZiZTFiZWY1ZjNiY2I1OWYyNmNjNWRiOWQ0In0=	2019-05-25 21:42:00.965335+00
+\.
+
+
+--
+-- Data for Name: jet_bookmark; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.jet_bookmark (id, url, title, "user", date_add) FROM stdin;
+\.
+
+
+--
+-- Name: jet_bookmark_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweety_dev_app
+--
+
+SELECT pg_catalog.setval('public.jet_bookmark_id_seq', 1, false);
+
+
+--
+-- Data for Name: jet_pinnedapplication; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.jet_pinnedapplication (id, app_label, "user", date_add) FROM stdin;
+\.
+
+
+--
+-- Name: jet_pinnedapplication_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweety_dev_app
+--
+
+SELECT pg_catalog.setval('public.jet_pinnedapplication_id_seq', 1, false);
+
+
+--
+-- Data for Name: users_tweet; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.users_tweet (id, created_at, modified_at, text, user_id) FROM stdin;
+1	2019-05-12 07:29:25.706431+00	2019-05-12 07:29:25.706533+00	First tweet is always happy	1
+2	2019-05-12 07:33:40.236377+00	2019-05-12 07:33:40.236403+00	Second tweet	1
+3	2019-05-12 07:54:47.532738+00	2019-05-12 07:54:47.532785+00	My first tweet	6
+\.
+
+
+--
+-- Name: users_tweet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweety_dev_app
+--
+
+SELECT pg_catalog.setval('public.users_tweet_id_seq', 3, true);
+
+
+--
+-- Data for Name: users_user; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.users_user (id, password, last_login, created_at, modified_at, is_active, first_name, last_name, username, email, profile_pic, date_joined, is_staff, is_superuser) FROM stdin;
+2	pbkdf2_sha256$150000$605AVJyLrc3b$Zo7mVc64n6XnlPI79jAuvrsUSXVOK44aAQYuhcYrqiY=	\N	2019-05-12 04:33:30.96531+00	2019-05-12 04:33:30.965335+00	t			test		\N	2019-05-12 04:33:30.822402+00	f	f
+3		\N	2019-05-12 05:43:40.732776+00	2019-05-12 05:43:40.732793+00	t	Shubham	Karma	karma	karma@shubham.com		2019-05-12 05:43:40.732333+00	f	f
+4		\N	2019-05-12 06:11:51.703874+00	2019-05-12 06:11:51.703884+00	t	Ravi	Gutla	gutla	gutla@ravi.com		2019-05-12 06:11:51.703644+00	f	f
+6		\N	2019-05-12 06:14:26.445545+00	2019-05-12 06:14:26.445556+00	t	Astha	Nagre	astha	astha@nagre.com		2019-05-12 06:14:26.445299+00	f	f
+7		\N	2019-05-12 06:15:19.396923+00	2019-05-12 06:15:19.39694+00	t	Nimbark	Gupta	guptaji	nimbark@gupta.com		2019-05-12 06:15:19.396569+00	f	f
+1	pbkdf2_sha256$150000$zI2BNBMFYkUp$x+MBO/m8qWo3d8BL7uIBnodgRLDTtHEOX9FcpJdEYEs=	2019-05-11 21:42:00+00	2019-05-11 21:41:55.594133+00	2019-05-12 07:16:20.189578+00	t	Sunit	Poddar	sunit	sunit@ithaka.travel	\N	2019-05-11 21:41:55+00	t	t
+5	hey	\N	2019-05-12 06:13:22.507245+00	2019-05-12 07:54:31.094085+00	t	Swati	Nagre	sho	sho@sunit.com	\N	2019-05-12 06:13:22+00	f	f
+\.
+
+
+--
+-- Data for Name: users_user_following; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.users_user_following (id, from_user_id, to_user_id) FROM stdin;
+1	1	5
+2	1	6
+3	1	7
+4	5	1
+5	5	6
+\.
+
+
+--
+-- Name: users_user_following_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweety_dev_app
+--
+
+SELECT pg_catalog.setval('public.users_user_following_id_seq', 5, true);
+
+
+--
+-- Data for Name: users_user_groups; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.users_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Name: users_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweety_dev_app
+--
+
+SELECT pg_catalog.setval('public.users_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweety_dev_app
+--
+
+SELECT pg_catalog.setval('public.users_user_id_seq', 7, true);
+
+
+--
+-- Data for Name: users_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: tweety_dev_app
+--
+
+COPY public.users_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: users_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweety_dev_app
+--
+
+SELECT pg_catalog.setval('public.users_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: jet_bookmark jet_bookmark_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.jet_bookmark
+    ADD CONSTRAINT jet_bookmark_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: jet_pinnedapplication jet_pinnedapplication_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.jet_pinnedapplication
+    ADD CONSTRAINT jet_pinnedapplication_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_tweet users_tweet_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_tweet
+    ADD CONSTRAINT users_tweet_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user users_user_email_key; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user
+    ADD CONSTRAINT users_user_email_key UNIQUE (email);
+
+
+--
+-- Name: users_user_following users_user_following_from_user_id_to_user_id_b8b96657_uniq; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_following
+    ADD CONSTRAINT users_user_following_from_user_id_to_user_id_b8b96657_uniq UNIQUE (from_user_id, to_user_id);
+
+
+--
+-- Name: users_user_following users_user_following_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_following
+    ADD CONSTRAINT users_user_following_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_groups users_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_groups users_user_groups_user_id_group_id_b88eab82_uniq; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_user_id_group_id_b88eab82_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: users_user users_user_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user
+    ADD CONSTRAINT users_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_user_permissions users_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_user_permissions users_user_user_permissions_user_id_permission_id_43338c45_uniq; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_permissions_user_id_permission_id_43338c45_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: users_user users_user_username_key; Type: CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user
+    ADD CONSTRAINT users_user_username_key UNIQUE (username);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: users_tweet_user_id_299bcb49; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX users_tweet_user_id_299bcb49 ON public.users_tweet USING btree (user_id);
+
+
+--
+-- Name: users_user_email_243f6e77_like; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX users_user_email_243f6e77_like ON public.users_user USING btree (email varchar_pattern_ops);
+
+
+--
+-- Name: users_user_following_from_user_id_3973dd85; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX users_user_following_from_user_id_3973dd85 ON public.users_user_following USING btree (from_user_id);
+
+
+--
+-- Name: users_user_following_to_user_id_ce29edb5; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX users_user_following_to_user_id_ce29edb5 ON public.users_user_following USING btree (to_user_id);
+
+
+--
+-- Name: users_user_groups_group_id_9afc8d0e; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX users_user_groups_group_id_9afc8d0e ON public.users_user_groups USING btree (group_id);
+
+
+--
+-- Name: users_user_groups_user_id_5f6f5a90; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX users_user_groups_user_id_5f6f5a90 ON public.users_user_groups USING btree (user_id);
+
+
+--
+-- Name: users_user_user_permissions_permission_id_0b93982e; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX users_user_user_permissions_permission_id_0b93982e ON public.users_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: users_user_user_permissions_user_id_20aca447; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX users_user_user_permissions_user_id_20aca447 ON public.users_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: users_user_username_06e46fe6_like; Type: INDEX; Schema: public; Owner: tweety_dev_app
+--
+
+CREATE INDEX users_user_username_06e46fe6_like ON public.users_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_tweet users_tweet_user_id_299bcb49_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_tweet
+    ADD CONSTRAINT users_tweet_user_id_299bcb49_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_following users_user_following_from_user_id_3973dd85_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_following
+    ADD CONSTRAINT users_user_following_from_user_id_3973dd85_fk_users_user_id FOREIGN KEY (from_user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_following users_user_following_to_user_id_ce29edb5_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_following
+    ADD CONSTRAINT users_user_following_to_user_id_ce29edb5_fk_users_user_id FOREIGN KEY (to_user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_groups users_user_groups_group_id_9afc8d0e_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_group_id_9afc8d0e_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_groups users_user_groups_user_id_5f6f5a90_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_user_id_5f6f5a90_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_user_permissions users_user_user_perm_permission_id_0b93982e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_perm_permission_id_0b93982e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_user_permissions users_user_user_permissions_user_id_20aca447_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: tweety_dev_app
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_permissions_user_id_20aca447_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
