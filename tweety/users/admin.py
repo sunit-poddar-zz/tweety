@@ -6,18 +6,10 @@ from django.contrib.auth.admin import UserAdmin
 from tweety_utils.admin_utils import AbstractModelAdmin
 
 # app imports
-from users.models import User, Tweet, Follows
+from users.models import User, Tweet
 from users.forms import CustomUserCreationForm, CustomUserChangeForm
 
 
-class CustomUserAdmin(UserAdmin):
-    model = User
-    add_form = CustomUserCreationForm
-    form = CustomUserChangeForm
-
-admin.site.register(User, CustomUserAdmin)
-
-
-# admin.site.register(User)
+admin.site.register(User)
 admin.site.register(Tweet)
-admin.site.register(Follows)
+# admin.site.register(Follows)
