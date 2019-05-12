@@ -11,8 +11,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
 # app imports
-from users.models import User
-from users.serializers import UserSerializer
+from users.models import User#, Follows
+from users.serializers import UserSerializer#, FollowSerializer
 
 
 class CustomUserViewset(ModelViewSet):
@@ -37,4 +37,3 @@ class CustomUserViewset(ModelViewSet):
         else:
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
-
