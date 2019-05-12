@@ -19,10 +19,10 @@ class User(RowInformation, AbstractUser):
     username = models.CharField(max_length=140, null=False, blank=False, unique=True, validators=[UnicodeUsernameValidator])
     email = models.CharField(max_length=140, null=False, blank=False, unique=True)
     profile_pic = models.URLField(null=True, blank=True)
-    following = models.ManyToManyField(to='User', related_name='followed_by')
+    following = models.ManyToManyField(to='User', related_name='followed_by', null=True, blank=True)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'password']
     objects = UserManager()
 
     def save(self, *args, **kwargs):
