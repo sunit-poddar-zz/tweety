@@ -32,6 +32,7 @@ def group_activity():
 
 
 def test_get_name_from_line():
+    print('\n\nTESTING NAME FROM LINE\n\n')
     if get_name_from_line('<John>: Okay, sounds like everyone is on the same page here') == 'John':
         print('pass')
     else:
