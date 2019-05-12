@@ -51,7 +51,7 @@ class TweetViewset(ModelViewSet):
 
 def user_profile_timeline(request, id):
     if request.user.is_authenticated:
-        user_tweets = User.objects.get(id=id).tweet.all().order_by('-created_at')
+        user_tweets = User.objects.get_ordered_tweets(id)
         serialized_tweets = TweetSerializer(user_tweets, many=True)
 
         return HttpResponse(JSONRenderer().render(serialized_tweets.data))
@@ -63,8 +63,8 @@ def user_home_timeline(request, id):
     if request.user.is_authenticated:
         if request.user.id == id:
             # preventing other logged in users from viewing someone else's home
-            tweet_ids = list(User.objects.get(id=id).following.values_list('tweet', flat=True))
-            tweets = Tweet.objects.filter(id__in=tweet_ids).order_by('-created_at')
+            tweet_ids = User.objects.get_following_user_tweets(id)
+            tweets = Tweet.objects.get_tweets_in_ids(tweet_ids)
             serialized_tweets = TweetSerializer(tweets, many=True)
 
             return HttpResponse(JSONRenderer().render(serialized_tweets.data))
