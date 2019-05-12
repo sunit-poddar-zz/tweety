@@ -2,15 +2,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.db import transaction
 
 # project imports
 from tweety_utils.model_utils import RowInformation
 
 # app imports
-from users.managers import UserManager
+from users.managers import UserManager, TweetManager
 
 
 class User(RowInformation, AbstractUser):
@@ -35,6 +32,8 @@ class User(RowInformation, AbstractUser):
 class Tweet(RowInformation):
     user = models.ForeignKey(to=User, on_delete=models.PROTECT, related_name='tweet')
     text = models.CharField(max_length=140, blank=False, null=False)
+
+    objects = TweetManager()
 
     def save(self, *args, **kwargs):
         super(Tweet, self).save(*args, **kwargs)
